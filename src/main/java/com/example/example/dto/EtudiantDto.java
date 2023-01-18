@@ -1,6 +1,7 @@
 package com.example.example.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class EtudiantDto {
 
@@ -8,6 +9,16 @@ public class EtudiantDto {
     private String prenom;
 
     private LocalDate date_naissance;
+
+    private List<Float> notes;
+
+    public List<Float> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<Float> notes) {
+        this.notes = notes;
+    }
 
     public String getNom() {
         return nom;

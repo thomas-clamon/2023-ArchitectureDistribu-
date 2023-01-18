@@ -1,6 +1,7 @@
 package com.example.example.ressources;
 
 import com.example.example.dto.EtudiantDto;
+import com.example.example.dto.EtudiantMoyenneDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,25 @@ public class EtudiantRessource {
         String message = "je m'appelle "+ dto.getPrenom() + " " + dto.getNom() + "j'ai " + age + "ans";
 
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @PostMapping ("avg")
+    public ResponseEntity moyenne (@RequestBody EtudiantDto dto){
+
+        // calcul de la moyenne
+        float sum =0;
+
+        for (int i =0; i<dto.getNotes().size(); i++){
+
+            sum += dto.getNotes().get(i);
+        }
+        float avg = sum/dto.getNotes().size();
+
+        EtudiantMoyenneDto reponse = new EtudiantMoyenneDto();
+
+        reponse.setDiplay_name(dto.getPrenom() + " " +dto.getNom() );
+        reponse.setMoyenne(avg);
+
+        return new ResponseEntity(reponse, HttpStatus.OK);
     }
 }
