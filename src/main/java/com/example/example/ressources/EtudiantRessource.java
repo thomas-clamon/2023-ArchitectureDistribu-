@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("Etudiant")
@@ -65,4 +67,27 @@ public class EtudiantRessource {
 
         return new ResponseEntity(reponse, HttpStatus.OK);
     }
+
+    @PostMapping("min_max")
+    public ResponseEntity minmax(@RequestBody EtudiantDto dto, @RequestParam String valeur)
+    {
+        // on trie la liste de notes
+        List<Float> sortedList = dto.getNotes();
+        Collections.sort(sortedList);
+
+        float reponse = 0;
+        if (valeur.equals("max")) {
+            reponse = sortedList.get(sortedList.size() -1);
+        }
+        else if (valeur.equals("min")){
+            reponse = sortedList.get(0);
+        }
+        else {
+            return new ResponseEntity("Parametre incorrect", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(reponse, HttpStatus.OK);
+
+    }
 }
+
